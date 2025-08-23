@@ -70,7 +70,7 @@ body {
 
 .navbar .nav-row a:hover {
   background-color: var(---extra);
-  color: var(---navbar);
+  color: var(---color);
 }
 
 .hero {
@@ -119,7 +119,7 @@ body {
 }
 
 .hero .row a:hover {
-  background-color: var(---primary2);
+  background-color: var(---color);
   color: #fff;
 }
 
@@ -390,13 +390,14 @@ body {
 .main-testimoni h1 {
   text-align: center;
   font-size: 2rem;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
   font-weight: 800;
 }
 
 .main-testimoni p {
   text-align: center;
   font-weight: 400;
+  margin: 2rem 0;
 }
 
 .testimoni-grid {
@@ -409,10 +410,10 @@ body {
   background: #fff;
   padding: 1rem;
   border-radius: 8px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
   display: flex;
   flex-direction: column;
-  gap: .5rem;
+  gap: 0.5rem;
 }
 
 .testimoni figure {
@@ -431,7 +432,7 @@ body {
 .note {
   flex: 1;
   margin: 0;
-  font-size: .9rem;
+  font-size: 0.9rem;
   line-height: 1.3;
 }
 
@@ -440,14 +441,111 @@ body {
   margin-top: auto;
   background: #25d366;
   color: #fff;
-  padding: .45em .9em;
+  padding: 0.45em 0.9em;
   border-radius: 6px;
   text-decoration: none;
-  font-size: .85rem;
+  font-size: 0.85rem;
   font-weight: 600;
   align-self: start;
-  transition: filter .2s;
+  transition: filter 0.2s;
 }
 .reply-wa:hover {
   filter: brightness(1.05);
+}
+
+.container-contact {
+  background-color: var(---navbar);
+  padding: 10rem 2% 1.5rem;
+  display: flex;
+}
+
+.maps {
+  margin: 2rem;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 1rem;
+  border-radius: 1rem;
+}
+.contact {
+  display: block;
+  width: 100%;
+}
+
+.contact h1 {
+  text-align: center;
+  font-size: 2rem;
+}
+
+.svg {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 2rem 0;
+}
+
+.svg svg {
+  margin-bottom: 0.5rem;
+  height: 2.5rem;
+  width: 2.5rem;
+}
+
+.svg a {
+  margin-top: 2rem;
+  color: var(---font);
+  font-size: 1.3rem;
+}
+
+.about-contact {
+  text-align: center;
+}
+
+.about-contact svg {
+  margin-bottom: 2rem;
+  height: 2.5rem;
+  width: 2.5rem;
+}
+
+.about-contact h1 {
+  margin-bottom: 1rem;
+}
+
+.about-contact p {
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.last {
+  text-align: center;
+}
+
+.scroll-anim {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 0.8s ease-out;
+}
+
+.scroll-anim.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.call-center {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  cursor: pointer;
+  z-index: 9999;
+}
+
+.call-center img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 50%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.call-center img:hover {
+  transform: scale(1.1);
 }
