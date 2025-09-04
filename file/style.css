@@ -62,9 +62,10 @@ body {
   color: var(---font);
   border-radius: 1rem;
   padding: 0.6rem;
+  transition: background-color 0.6s ease, color 0.6s ease;
 }
 
-.navbar .nav-row a svg {
+.navbar .nav-row a {
   height: 1.2rem;
 }
 
@@ -116,6 +117,7 @@ body {
   border-radius: 0.5rem;
   font-weight: 700;
   color: var(---font);
+  transition: background-color 0.6s ease, color 0.6s ease;
 }
 
 .hero .row a:hover {
@@ -161,10 +163,7 @@ body {
 
 .row-about {
   justify-content: space-between;
-  border-radius: 2rem;
-  box-shadow: 8px 4px 14px -1px rgba(0, 0, 0, 0.75);
-  -webkit-box-shadow: 8px 4px 14px -1px rgba(0, 0, 0, 0.75);
-  -moz-box-shadow: 8px 4px 14px -1px rgba(0, 0, 0, 0.75);
+
 }
 
 .row-about svg {
@@ -351,10 +350,15 @@ body {
   flex-direction: column;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
+  color: #000;
+   transform: scale(1);
+  transform-origin: center;
+  transition: transform 300ms cubic-bezier(.2,.8,.2,1);
+  will-change: transform;
 }
 
 .content-artikel:hover {
-  transform: scale(1.1);
+  transform: scale(1.06);
 }
 
 .content-artikel h2 {
@@ -369,11 +373,11 @@ body {
   font-weight: 300;
 }
 
-.content-artikel a {
+.content-artikel h3 {
   color: #000;
   text-align: start;
   margin: 1rem;
-  font-size: 0.7rem;
+  font-size: 1rem;
   text-decoration: underline;
 }
 
@@ -414,7 +418,16 @@ body {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  transform: scale(1);
+  transform-origin: center;
+  transition: transform 300ms cubic-bezier(.2,.8,.2,1);
+  will-change: transform;
 }
+
+.testimoni:hover, .testimoni:focus-visible{
+  transform: scale(1.06);
+}
+
 
 .testimoni figure {
   margin: 0;
@@ -453,66 +466,6 @@ body {
   filter: brightness(1.05);
 }
 
-.container-contact {
-  background-color: var(---navbar);
-  padding: 10rem 2% 1.5rem;
-  display: flex;
-}
-
-.maps {
-  margin: 2rem;
-  background-color: rgba(0, 0, 0, 0.5);
-  padding: 1rem;
-  border-radius: 1rem;
-}
-.contact {
-  display: block;
-  width: 100%;
-}
-
-.contact h1 {
-  text-align: center;
-  font-size: 2rem;
-}
-
-.svg {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 2rem 0;
-}
-
-.svg svg {
-  margin-bottom: 0.5rem;
-  height: 2.5rem;
-  width: 2.5rem;
-}
-
-.svg a {
-  margin-top: 2rem;
-  color: var(---font);
-  font-size: 1.3rem;
-}
-
-.about-contact {
-  text-align: center;
-}
-
-.about-contact svg {
-  margin-bottom: 2rem;
-  height: 2.5rem;
-  width: 2.5rem;
-}
-
-.about-contact h1 {
-  margin-bottom: 1rem;
-}
-
-.about-contact p {
-  font-size: 1.3rem;
-  font-weight: 600;
-}
-
 .last {
   text-align: center;
 }
@@ -544,8 +497,87 @@ body {
   object-fit: contain;
   border-radius: 50%;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+   transform: scale(1);
+  transform-origin: center;
+  transition: transform 300ms cubic-bezier(.2,.8,.2,1);
+  will-change: transform;
 }
 
 .call-center img:hover {
-  transform: scale(1.1);
+  transform: scale(1.06);
+}
+
+.footer {
+  background-color: var(---navbar);
+  padding: 3rem 2rem 1.5rem;
+  margin-top: 3rem;
+  box-shadow: 0 -2px 8px rgba(0,0,0,0.1);
+  font-size: 0.95rem;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+}
+
+.footer-brand img {
+  width: 100px;
+  margin-bottom: 1rem;
+}
+
+.footer-brand p {
+  color: #555;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.footer-links h2,
+.footer-help h2,
+.footer-social h2 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.footer-links ul,
+.footer-help ul,
+.footer-social ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links li,
+.footer-help li,
+.footer-social li {
+  margin-bottom: 0.5rem;
+}
+
+.footer-links a,
+.footer-help a,
+.footer-social a {
+  color: var(---font);
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.footer-links a:hover,
+.footer-help a:hover,
+.footer-social a:hover {
+  color: var(---color);
+}
+
+.footer-social ul li svg {
+  margin-right: 0.5rem;
+  vertical-align: middle;
+}
+
+.footer-bottom {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(0,0,0,0.1);
+  text-align: center;
+  font-size: 0.85rem;
+  color: #777;
 }
