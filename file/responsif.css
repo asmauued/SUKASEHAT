@@ -85,6 +85,7 @@
   #detail-artikel > button {
     position: fixed;
     margin-left: -1rem;
+    font-size: 2rem
   }
 
   .footer {
