@@ -49,6 +49,7 @@
     padding: 2rem;
   }
 
+
   .about h2 {
     width: 80%;
   }
@@ -75,6 +76,15 @@
 
   .main-artikel {
     margin: 1rem 0;
+  }
+
+  #detail-artikel {
+    font-size: 1.2rem;
+  }
+
+  #detail-artikel > button {
+    position: fixed;
+    margin-left: -1rem;
   }
 
   .footer {

@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="./file/style.css" />
     <link rel="icon" href="./img/logo.webp" type="image/webp">
     <script src="./file/script.js" /></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <link rel="stylesheet" href="./file/responsif.css">
     <title>Portal Kesehatan</title> 
   </head>
@@ -285,47 +286,17 @@
     </header>
 
     <header class="main-artikel scroll-anim" id="artikel">
-      <h1>Artikel</h1>
-      <p>Baca Lebih Lanjut:</p>
-      <section class="body-artikel">
-        <a href="#" target="_blank" class="content-artikel">
-          <img src="./img/hero.webp" alt="" loading="lazy"/>
-          <h2>Susu Kambing Otawa</h2>
-          <p>
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sed,
-            dolores provident volupta
-          </p>
-          <h3>Baca Lebih Lanjut</h3>
-        </a>
-        <a href="#" target="_blank" class="content-artikel">
-          <img src="./img/hero.webp" alt="" loading="lazy"/>
-          <h2>Susu Kambing Otawa</h2>
-          <p>
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sed,
-            dolores provident volupta
-          </p>
-          <h3>Baca Lebih Lanjut</h3>
-        </a>
-        <a href="#" target="_blank" class="content-artikel">
-          <img src="./img/hero.webp" alt="" loading="lazy"/>
-          <h2>Susu Kambing Otawa</h2>
-          <p>
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sed,
-            dolores provident volupta
-          </p>
-          <h3>Baca Lebih Lanjut</h3>
-        </a>
-        <a href="#" target="_blank" class="content-artikel">
-          <img src="./img/hero.webp" alt="" loading="lazy"/>
-          <h2>Susu Kambing Otawa</h2>
-          <p>
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sed,
-            dolores provident volupta
-          </p>
-          <h3>Baca Lebih Lanjut</h3>
-        </a>
-      </section>
-    </header>
+  <h1>Artikel</h1>
+  <p>Baca Lebih Lanjut:</p>
+  <section class="body-artikel" id="body-artikel">
+    <section id="pagination-controls"></section>
+  </section>
+</header>
+
+<section id="detail-artikel" style="display:none; max-width:800px; margin:auto; padding:20px;">
+  <button onclick="showList()">←</button>
+  <div id="detail-container"></div>
+</section>
 
 <footer class="footer scroll-anim" id="Contact">
   <section class="footer-grid">
