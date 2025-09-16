@@ -157,3 +157,18 @@ function showList() {
     detail.removeEventListener("animationend", handler);
   });
 }
+
+const CACHE_NAME = 'offline-v1';
+const OFFLINE_URL = 'error.html';
+
+self.addEventListener('install', e => {
+  e.waitUntil(
+    caches.open(CACHE_NAME).then(cache => cache.addAll([OFFLINE_URL]))
+  );
+});
+
+self.addEventListener('fetch', e => {
+  e.respondWith(
+    fetch(e.request).catch(() => caches.match(OFFLINE_URL))
+  );
+});

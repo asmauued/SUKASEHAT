@@ -494,7 +494,7 @@ body {
 
 #detail-artikel > button {
   position: fixed;
-  margin-left: -22rem;
+  margin-left: -33rem;
   top: 20px;
   left: 20px;
   background: var(---primary); 
@@ -503,7 +503,7 @@ body {
   border-radius: 50%;
   width: 3rem;
   height: 3rem;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   cursor: pointer;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   transition: 0.3s;
@@ -649,8 +649,8 @@ body {
 
 .footer-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 20rem;
 }
 
 .footer-brand img {
@@ -660,20 +660,18 @@ body {
 
 .footer-brand p {
   color: #555;
-  font-size: 0.9rem;
+  font-size: 1.2rem;
   line-height: 1.4;
 }
 
 .footer-links h2,
-.footer-help h2,
 .footer-social h2 {
-  font-size: 1rem;
+  font-size: 1.5rem;
   font-weight: 700;
   margin-bottom: 1rem;
 }
 
 .footer-links ul,
-.footer-help ul,
 .footer-social ul {
   list-style: none;
   padding: 0;
@@ -681,21 +679,18 @@ body {
 }
 
 .footer-links li,
-.footer-help li,
 .footer-social li {
   margin-bottom: 0.5rem;
 }
 
 .footer-links a,
-.footer-help a,
 .footer-social a {
   color: var(---font);
   text-decoration: none;
-  font-size: 0.9rem;
+  font-size: 1.2rem;
 }
 
 .footer-links a:hover,
-.footer-help a:hover,
 .footer-social a:hover {
   color: var(---color);
 }
