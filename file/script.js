@@ -158,37 +158,28 @@ function showList() {
   });
 }
 
-(function(){
-  const onlineContent = document.getElementById('online-content');
-  const offlineMsg    = document.getElementById('offline-message');
-
-  function updateStatus() {
-    if (navigator.onLine) {
-      onlineContent.style.display = 'block';
-      offlineMsg.style.display    = 'none';
-    } else {
-      onlineContent.style.display = 'none';
-      offlineMsg.style.display    = 'block';
-    }
-  }
-
-  updateStatus();
-
 function cekKoneksi() {
-  if (!navigator.onLine) {
-    window.location.href = "error.html";
+  if (!navigator.onLine && !window.location.pathname.endsWith('error.html')) {
+    window.location.href = 'error.html';
   }
 }
 
 cekKoneksi();
 
-window.addEventListener("offline", () => {
-  window.location.href = "error.html";
+window.addEventListener('offline', () => {
+  if (!window.location.pathname.endsWith('error.html')) {
+    window.location.href = 'error.html';
+  }
 });
 
-window.addEventListener("online", () => {
-  if (window.location.pathname.endsWith("error.html")) {
-    window.location.href = "index.html";
+window.addEventListener('online', () => {
+  if (window.location.pathname.endsWith('error.html')) {
+    window.location.href = 'index.html';
   }
-});ndow.Location.href = 'index.html';
 });
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./file/sw.js').catch(err => {
+    console.error('Service Worker gagal didaftarkan:', err);
+  });
+}
