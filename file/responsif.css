@@ -132,6 +132,11 @@
     gap: 0.4rem;
     transition: all 0.3s ease;
   }
+.footer-social svg {
+  width: auto;
+  height: auto;
+  padding: 0.4rem 0.8rem;
+}
 
   .footer-social a:hover {
     background: var(---color);

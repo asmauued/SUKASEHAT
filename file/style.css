@@ -700,6 +700,10 @@ body {
   vertical-align: middle;
 }
 
+.footer-social img {
+  width: 1.5rem;
+}
+
 .footer-bottom {
   margin-top: 2rem;
   padding-top: 1rem;
