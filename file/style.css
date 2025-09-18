@@ -770,32 +770,3 @@ body {
   100% { transform: rotate(360deg); }
 }
 
-dialog {
-  border: none;
-  border-radius: 12px;
-  padding: 1.5rem;
-  background: var(--primary);
-  color: #fff;
-  max-width: 320px;
-  box-shadow: 0 0 20px rgba(0,0,0,0.4);
-  text-align: center;
-}
-
-dialog::backdrop {
-  background: rgba(0,0,0,0.5);
-}
-
-dialog button {
-  margin-top: 1rem;
-  padding: 0.5rem 1rem;
-  background: var(--accent);
-  border: none;
-  border-radius: 8px;
-  color: #000;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-dialog button:hover {
-  background: #c8e6c9;
-}
