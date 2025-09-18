@@ -174,22 +174,21 @@ function showList() {
 
   updateStatus();
 
-  window.addEventListener('online',  updateStatus);
-  window.addEventListener('offline', updateStatus);
+function cekKoneksi() {
+  if (!navigator.onLine) {
+    window.location.href = "error.html";
+  }
+}
 
-  window.addEventListener('error', () => {
-    onlineContent.style.display = 'none';
-    offlineMsg.style.display    = 'block';
-  });
-})();const OFFLINE_URL = 'error.html';
+cekKoneksi();
 
-window.addEventListener('error', () => {
-  window.location.href = 'error.html';
-});
-window.addEventListener('offline', () => {
-  window.location.href = 'error.html';
+window.addEventListener("offline", () => {
+  window.location.href = "error.html";
 });
 
-window.addEventListener('online', () =>  {
-  window.Location.href = 'index.html';
+window.addEventListener("online", () => {
+  if (window.location.pathname.endsWith("error.html")) {
+    window.location.href = "index.html";
+  }
+});ndow.Location.href = 'index.html';
 });
