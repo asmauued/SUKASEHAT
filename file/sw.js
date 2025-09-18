@@ -3,10 +3,10 @@ self.addEventListener('install', event => {
   event.waitUntil(
     caches.open('v1').then(cache => {
       return cache.addAll([
-        '/',
-        '/index.html',
-        '/error.html',
-        '/script.js'
+        'SUKASEHAT/',
+        'SUKASEHAT/index.html',
+        'SUKASEHAT/error.html',
+        'SUKASEHAT/script.js'
       ]);
     })
   );
