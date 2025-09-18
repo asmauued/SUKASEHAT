@@ -22,6 +22,7 @@
       .then(reg => console.log('SW terdaftar', reg))
       .catch(err => console.log('Gagal daftar SW', err));
   }
+  
 </script>
 
   </head>
@@ -344,9 +345,23 @@
   </section>
 </footer>
 
+  <section id="preloader">
+    <div class="spinner"></div>
+    <p>Loading...</p>
+  </section>
 
+  <dialog id="warnDialog">
+    <article>
+      <header>
+        <h2>Peringatan!</h2>
+      </header>
+      <p>Akses pintasan & klik kanan dinonaktifkan.</p>
+      <footer>
+        <button id="closeWarn">Tutup</button>
+      </footer>
+    </article>
+  </dialog>
 
-    
     <script>
       feather.replace();
     </script>

@@ -183,3 +183,46 @@ if ('serviceWorker' in navigator) {
     console.error('Service Worker gagal didaftarkan:', err);
   });
 }
+
+
+document.addEventListener("DOMContentLoaded", function () {
+  const preloader = document.getElementById("preloader");
+  const content   = document.getElementById("content");
+  setTimeout(() => {
+    preloader.style.opacity = "0";   
+    setTimeout(() => {
+      preloader.style.display = "none"; 
+      content.style.display = "block"; 
+    }, 500);
+  }, 1000);
+})
+
+const warnDialog = document.getElementById('warnDialog');
+const closeWarn  = document.getElementById('closeWarn');
+
+function showWarning() {
+  if (!warnDialog.open) warnDialog.showModal();
+}
+
+
+document.addEventListener('contextmenu', e => {
+  e.preventDefault();
+  showWarning();
+}, true);
+
+
+document.addEventListener('keydown', e => {
+  const k = e.key.toLowerCase();
+  if (
+    e.key === "F12" ||
+    (e.ctrlKey && e.shiftKey && ["i","j","c"].includes(k)) ||
+    (e.ctrlKey && k === "u")
+  ) {
+    e.preventDefault();
+    showWarning();
+  }
+}, true);
+
+closeWarn.addEventListener('click', () => {
+  warnDialog.close();
+});
