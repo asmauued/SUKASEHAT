@@ -16,6 +16,14 @@
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <link rel="stylesheet" href="./file/responsif.css">
     <title>Portal Kesehatan</title> 
+<script>
+    if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./file/sw.js')
+      .then(reg => console.log('SW terdaftar', reg))
+      .catch(err => console.log('Gagal daftar SW', err));
+  }
+</script>
+
   </head>
   <body>
     <header class="navbar">
