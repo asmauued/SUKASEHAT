@@ -158,17 +158,38 @@ function showList() {
   });
 }
 
-const CACHE_NAME = 'offline-v1';
-const OFFLINE_URL = 'error.html';
+(function(){
+  const onlineContent = document.getElementById('online-content');
+  const offlineMsg    = document.getElementById('offline-message');
 
-self.addEventListener('install', e => {
-  e.waitUntil(
-    caches.open(CACHE_NAME).then(cache => cache.addAll([OFFLINE_URL]))
-  );
+  function updateStatus() {
+    if (navigator.onLine) {
+      onlineContent.style.display = 'block';
+      offlineMsg.style.display    = 'none';
+    } else {
+      onlineContent.style.display = 'none';
+      offlineMsg.style.display    = 'block';
+    }
+  }
+
+  updateStatus();
+
+  window.addEventListener('online',  updateStatus);
+  window.addEventListener('offline', updateStatus);
+
+  window.addEventListener('error', () => {
+    onlineContent.style.display = 'none';
+    offlineMsg.style.display    = 'block';
+  });
+})();const OFFLINE_URL = 'error.html';
+
+window.addEventListener('error', () => {
+  window.location.href = 'error.html';
+});
+window.addEventListener('offline', () => {
+  window.location.href = 'error.html';
 });
 
-self.addEventListener('fetch', e => {
-  e.respondWith(
-    fetch(e.request).catch(() => caches.match(OFFLINE_URL))
-  );
+window.addEventListener('online', () =>  {
+  window.Location.href = 'index.html';
 });
