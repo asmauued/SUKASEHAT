@@ -2,31 +2,36 @@
   {
     "id": 1,
     "file": "artikel/artikel1.txt",
-    "gambar": "gambar/extra.webp",
-    "tanggal": "2025-09-01"
+    "gambar": "./gambar/extra.webp",
+    "tanggal": "2025-09-01",
+    "link": "https://sukasehat.com/artikel-1"
   },
   {
     "id": 2,
     "file": "artikel/artikel1.txt",
-    "gambar": "gambar/extra.webp",
-    "tanggal": "2025-09-05"
+    "gambar": "./gambar/extra.webp",
+    "tanggal": "2025-09-05",
+    "link": "https://sukasehat.com/artikel-1"
   },
   {
     "id": 3,
     "file": "artikel/artikel1.txt",
-    "gambar": "gambar/extra.webp",
-    "tanggal": "2025-09-05"
+    "gambar": "./gambar/extra.webp",
+    "tanggal": "2025-09-05",
+    "link": "https://sukasehat.com/artikel-1"
   },
   {
     "id": 4,
     "file": "artikel/artikel1.txt",
-    "gambar": "gambar/extra.webp",
-    "tanggal": "2025-09-05"
+    "gambar": "./gambar/extra.webp",
+    "tanggal": "2025-09-05",
+    "link": "https://sukasehat.com/artikel-1"
   },
   {
     "id": 5,
     "file": "artikel/artikel1.txt",
-    "gambar": "gambar/extra.webp",
-    "tanggal": "2025-09-10"
+    "gambar": "./gambar/extra.webp",
+    "tanggal": "2025-09-10",
+    "link": "https://sukasehat.com/artikel-1"
   }
 ]

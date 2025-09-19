@@ -58,7 +58,7 @@ function renderPage() {
         `;
 
         card.addEventListener("click", () => {
-          showDetail(text, item.gambar, item.tanggal);
+          showDetail(text, item.gambar, item.tanggal, item.link);
         });
 
         container.appendChild(card);
@@ -96,31 +96,28 @@ function renderControls() {
   }
 }
 
-function showDetail(text, gambar, tanggal) {
+function showDetail(text, gambar, tanggal, link) {
+  history.pushState({}, "", `./${link}`);
+
   const body = document.body;
   const detail = document.getElementById("detail-artikel");
   const detailContainer = document.getElementById("detail-container");
 
   Array.from(body.children).forEach((el) => {
-    if (el.id !== "detail-artikel") {
-      el.style.display = "none";
-    }
+    if (el.id !== "detail-artikel") el.style.display = "none";
   });
 
   detail.style.display = "block";
   detail.classList.remove("leave");
   void detail.offsetWidth;
   detail.classList.add("enter");
+
   setTimeout(() => {
     window.scrollTo({ top: 0, behavior: "instant" });
-    detail.scrollTop = 0;
-    document.documentElement.scrollTop = 0;
-    document.body.scrollTop = 0;
   }, 50);
 
   const title = (text.match(/TITLE:\s*(.+)/) || [])[1] || "";
-  const contentMatch = text.match(/CONTENT:\s*([\s\S]*)/);
-  const content = contentMatch ? contentMatch[1] : "";
+  const content = (text.match(/CONTENT:\s*([\s\S]*)/) || [])[1] || "";
 
   detailContainer.innerHTML = `
     <h1>${title}</h1>
@@ -130,14 +127,14 @@ function showDetail(text, gambar, tanggal) {
       ${marked.parse(content)}
       <div class="detail-cta">
         Lindungi kesehatan tulang dan sendi Anda dengan susu kambing bubuk dari
-        Skygoat, Sigoat, Sheepbrand, Naturamil, dan Otawa. 
+        Skygoat, Sigoat, Sheepbrand, Naturamil, dan Otawa.
         Pembelian hanya di <b>Suka Sehat</b>!
       </div>
     </article>
   `;
 }
-
 function showList() {
+  history.pushState({}, "", "/");
   const body = document.body;
   const detail = document.getElementById("detail-artikel");
 
@@ -152,6 +149,7 @@ function showList() {
           el.style.display = "";
         }
       });
+      currentPage = 0;
       renderPage();
     }
     detail.removeEventListener("animationend", handler);
@@ -159,70 +157,75 @@ function showList() {
 }
 
 function cekKoneksi() {
-  if (!navigator.onLine && !window.location.pathname.endsWith('error.html')) {
-    window.location.href = 'error.html';
+  if (!navigator.onLine && !window.location.pathname.endsWith("error.html")) {
+    window.location.href = "error.html";
   }
 }
 
 cekKoneksi();
 
-window.addEventListener('offline', () => {
-  if (!window.location.pathname.endsWith('error.html')) {
-    window.location.href = 'error.html';
+window.addEventListener("offline", () => {
+  if (!window.location.pathname.endsWith("error.html")) {
+    window.location.href = "error.html";
   }
 });
 
-window.addEventListener('online', () => {
-  if (window.location.pathname.endsWith('error.html')) {
-    window.location.href = 'index.html';
+window.addEventListener("online", () => {
+  if (window.location.pathname.endsWith("error.html")) {
+    window.location.href = "index.html";
   }
 });
 
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('./file/sw.js').catch(err => {
-    console.error('Service Worker gagal didaftarkan:', err);
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("./file/sw.js").catch((err) => {
+    console.error("Service Worker gagal didaftarkan:", err);
   });
 }
 
-
 document.addEventListener("DOMContentLoaded", function () {
   const preloader = document.getElementById("preloader");
-  const content   = document.getElementById("content");
+  const content = document.getElementById("content");
   setTimeout(() => {
-    preloader.style.opacity = "0";   
+    preloader.style.opacity = "0";
     setTimeout(() => {
-      preloader.style.display = "none"; 
-      content.style.display = "block"; 
+      preloader.style.display = "none";
+      content.style.display = "block";
     }, 500);
   }, 1000);
-})
+});
 
-const warnDialog = document.getElementById('warnDialog');
-const closeWarn  = document.getElementById('closeWarn');
+const warnDialog = document.getElementById("warnDialog");
+const closeWarn = document.getElementById("closeWarn");
 
 function showWarning() {
   if (!warnDialog.open) warnDialog.showModal();
 }
 
-
-document.addEventListener('contextmenu', e => {
-  e.preventDefault();
-  showWarning();
-}, true);
-
-
-document.addEventListener('keydown', e => {
-  const k = e.key.toLowerCase();
-  if (
-    e.key === "F12" ||
-    (e.ctrlKey && e.shiftKey && ["i","j","c"].includes(k)) ||
-    (e.ctrlKey && k === "u")
-  ) {
+document.addEventListener(
+  "contextmenu",
+  (e) => {
     e.preventDefault();
     showWarning();
-  }
-}, true);
+  },
+  true
+);
 
-closeWarn.addEventListener('click', () => {
+document.addEventListener(
+  "keydown",
+  (e) => {
+    const k = e.key.toLowerCase();
+    if (
+      e.key === "F12" ||
+      (e.ctrlKey && e.shiftKey && ["i", "j", "c"].includes(k)) ||
+      (e.ctrlKey && k === "u")
+    ) {
+      e.preventDefault();
+      showWarning();
+    }
+  },
+  true
+);
+
+closeWarn.addEventListener("click", () => {
   warnDialog.close();
 });
