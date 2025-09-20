@@ -1,19 +1,15 @@
 document.addEventListener("DOMContentLoaded", () => {
+  // Animasi scroll
   const animatedElements = document.querySelectorAll(".scroll-anim");
-
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("show");
-        } else {
-          entry.target.classList.remove("show");
-        }
+        if (entry.isIntersecting) entry.target.classList.add("show");
+        else entry.target.classList.remove("show");
       });
     },
     { threshold: 0.1 }
   );
-
   animatedElements.forEach((el) => observer.observe(el));
 });
 
@@ -41,25 +37,18 @@ function renderPage() {
     fetch(item.file)
       .then((res) => res.text())
       .then((text) => {
-        const titleMatch = text.match(/TITLE:\s*(.+)/);
-        const descMatch = text.match(/DESCRIPTION:\s*(.+)/);
+        const title = (text.match(/TITLE:\s*(.+)/) || [])[1] || "Tanpa Judul";
+        const desc =
+          (text.match(/DESCRIPTION:\s*(.+)/) || [])[1] || "Tanpa Deskripsi";
 
-        const title = titleMatch ? titleMatch[1] : "Tanpa Judul";
-        const desc = descMatch ? descMatch[1] : "Tanpa Deskripsi";
-
-        const card = document.createElement("a");
-        card.href = "javascript:void(0)";
+        // hanya menampilkan kartu, tanpa aksi klik
+        const card = document.createElement("div");
         card.className = "content-artikel";
         card.innerHTML = `
           <img src="${item.gambar}" alt="${title}" loading="lazy"/>
           <h2>${title}</h2>
           <p>${desc}</p>
-          <h3>Baca Lebih Lanjut</h3>
         `;
-
-        card.addEventListener("click", () => {
-          showDetail(text, item.gambar, item.tanggal, item.link);
-        });
 
         container.appendChild(card);
       });
@@ -73,7 +62,6 @@ function renderControls() {
     controls.id = "pagination-controls";
     controls.style.textAlign = "center";
     controls.style.margin = "20px";
-    controls.style.backgroundColorcolor = "#e8ffd7";
     controls.innerHTML = `
       <button id="prevBtn">← Sebelumnya</button>
       <button id="nextBtn">Berikutnya →</button>
@@ -86,7 +74,6 @@ function renderControls() {
         renderPage();
       }
     });
-
     document.getElementById("nextBtn").addEventListener("click", () => {
       if ((currentPage + 1) * pageSize < articlesData.length) {
         currentPage++;
@@ -96,90 +83,23 @@ function renderControls() {
   }
 }
 
-function showDetail(text, gambar, tanggal, link) {
-  history.pushState({}, "", `./${link}`);
-
-  const body = document.body;
-  const detail = document.getElementById("detail-artikel");
-  const detailContainer = document.getElementById("detail-container");
-
-  Array.from(body.children).forEach((el) => {
-    if (el.id !== "detail-artikel") el.style.display = "none";
-  });
-
-  detail.style.display = "block";
-  detail.classList.remove("leave");
-  void detail.offsetWidth;
-  detail.classList.add("enter");
-
-  setTimeout(() => {
-    window.scrollTo({ top: 0, behavior: "instant" });
-  }, 50);
-
-  const title = (text.match(/TITLE:\s*(.+)/) || [])[1] || "";
-  const content = (text.match(/CONTENT:\s*([\s\S]*)/) || [])[1] || "";
-
-  detailContainer.innerHTML = `
-    <h1>${title}</h1>
-    <small><i>Dipublikasikan: ${tanggal}</i></small>
-    <img src="${gambar}" alt="${title}" />
-    <article>
-      ${marked.parse(content)}
-      <div class="detail-cta">
-        Lindungi kesehatan tulang dan sendi Anda dengan susu kambing bubuk dari
-        Skygoat, Sigoat, Sheepbrand, Naturamil, dan Otawa.
-        Pembelian hanya di <b>Suka Sehat</b>!
-      </div>
-    </article>
-  `;
-}
-function showList() {
-  history.pushState({}, "", "/");
-  const body = document.body;
-  const detail = document.getElementById("detail-artikel");
-
-  detail.classList.remove("enter");
-  detail.classList.add("leave");
-
-  detail.addEventListener("animationend", function handler() {
-    if (detail.classList.contains("leave")) {
-      detail.style.display = "none";
-      Array.from(body.children).forEach((el) => {
-        if (el.id !== "detail-artikel") {
-          el.style.display = "";
-        }
-      });
-      currentPage = 0;
-      renderPage();
-    }
-    detail.removeEventListener("animationend", handler);
-  });
-}
-
+/* --- Bagian lain (cek koneksi, preloader, warning) tetap --- */
 function cekKoneksi() {
   if (!navigator.onLine && !window.location.pathname.endsWith("error.html")) {
     window.location.href = "error.html";
   }
 }
-
 cekKoneksi();
-
-window.addEventListener("offline", () => {
-  if (!window.location.pathname.endsWith("error.html")) {
-    window.location.href = "error.html";
-  }
-});
-
+window.addEventListener("offline", cekKoneksi);
 window.addEventListener("online", () => {
-  if (window.location.pathname.endsWith("error.html")) {
-    window.location.href = "index.html";
-  }
+  if (window.location.pathname.endsWith("error.html"))
+    location.href = "index.html";
 });
 
 if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("./file/sw.js").catch((err) => {
-    console.error("Service Worker gagal didaftarkan:", err);
-  });
+  navigator.serviceWorker
+    .register("./file/sw.js")
+    .catch((err) => console.error("Service Worker gagal:", err));
 }
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -196,11 +116,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
 const warnDialog = document.getElementById("warnDialog");
 const closeWarn = document.getElementById("closeWarn");
-
 function showWarning() {
   if (!warnDialog.open) warnDialog.showModal();
 }
-
 document.addEventListener(
   "contextmenu",
   (e) => {
@@ -209,7 +127,6 @@ document.addEventListener(
   },
   true
 );
-
 document.addEventListener(
   "keydown",
   (e) => {
@@ -225,7 +142,4 @@ document.addEventListener(
   },
   true
 );
-
-closeWarn.addEventListener("click", () => {
-  warnDialog.close();
-});
+closeWarn.addEventListener("click", () => warnDialog.close());
