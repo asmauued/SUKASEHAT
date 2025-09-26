@@ -31,6 +31,12 @@ body {
   font-family: "Huninn", sans-serif;
   color: var(---font);
 }
+body.detail-open > *:not(#detail-artikel) {
+  display: none !important;
+}
+body.detail-open #detail-artikel {
+  display: block;
+}
 
 .navbar {
   background-color: var(---navbar);
@@ -426,6 +432,9 @@ body {
     transform: translateY(20px);
     pointer-events: none;
   }
+}
+#detail-artikel {
+  display: none;
 }
 #detail-artikel h1 {
   font-size: 2rem;
