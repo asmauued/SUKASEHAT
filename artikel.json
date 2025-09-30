@@ -2,36 +2,9 @@
   {
     "id": 1,
     "file": "artikel/artikel1.txt",
-    "gambar": "./gambar/extra.webp",
+    "gambar": "./gambar/pernapasan-tersendat-6-solusi-ultim-meredakan-asma-napas-bebas.webp",
     "tanggal": "2025-09-01",
-    "slug": "artikel-1"
-  },
-  {
-    "id": 2,
-    "file": "artikel/artikel2.txt",
-    "gambar": "./gambar/CEWEK.png",
-    "tanggal": "2025-09-05",
-    "slug": "artikel-2"
-  },
-  {
-    "id": 3,
-    "file": "artikel/artikel3.txt",
-    "gambar": "./gambar/extra.webp",
-    "tanggal": "2025-09-05",
-    "slug": "artikel-3"
-  },
-  {
-    "id": 4,
-    "file": "artikel/artikel4.txt",
-    "gambar": "./gambar/extra.webp",
-    "tanggal": "2025-09-05",
-    "slug": "artikel-1"
-  },
-  {
-    "id": 5,
-    "file": "artikel/artikel5.txt",
-    "gambar": "./gambar/extra.webp",
-    "tanggal": "2025-09-10",
-    "slug": "artikel-1"
+    "slug": "pernapasan-tersendat-6-solusi-ultim-meredakan-asma-napas-bebas"
   }
+
 ]

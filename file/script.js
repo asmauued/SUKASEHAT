@@ -21,22 +21,26 @@ document.addEventListener("DOMContentLoaded", () => {
   initWarnDialog();
   cekKoneksi();
 
-  fetch("artikel.json")
-    .then(res => res.json())
-    .then(data => {
-      articlesData = data;
-      renderPage();
-      renderControls();
-      const slug = new URLSearchParams(location.search).get("slug");
-      if (slug) {
-        const found = articlesData.find(a => a.slug === slug);
-        if (found) {
-          fetch(found.file)
-            .then(r => r.text())
-            .then(t => showDetail(t, found.gambar, found.tanggal));
-        }
+fetch("artikel.json")
+  .then(res => res.json())
+  .then(data => {
+    articlesData = data.sort((a, b) =>
+      new Date(b.tanggal) - new Date(a.tanggal)
+    );
+
+    renderPage();
+    renderControls();
+
+    const slug = new URLSearchParams(location.search).get("slug");
+    if (slug) {
+      const found = articlesData.find(a => a.slug === slug);
+      if (found) {
+        fetch(found.file)
+          .then(r => r.text())
+          .then(t => showDetail(t, found.gambar, found.tanggal));
       }
-    });
+    }
+  });
 });
 
 let articlesData = [];
