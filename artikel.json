@@ -3,8 +3,15 @@
     "id": 1,
     "file": "artikel/artikel1.txt",
     "gambar": "./gambar/pernapasan-tersendat-6-solusi-ultim-meredakan-asma-napas-bebas.webp",
-    "tanggal": "2025-09-01",
+    "tanggal": "2025-10-01",
     "slug": "pernapasan-tersendat-6-solusi-ultim-meredakan-asma-napas-bebas"
+  },
+  {
+    "id": 2,
+    "file": "artikel/artikel2.txt",
+    "gambar": "./gambar/semangat-pudar-3-solusi-jitu-mengatasi-anemia-energi.png",
+    "tanggal": "2025-10-02",
+    "slug": "semangat-pudar-3-solusi-jitu-mengatasi-anemia-energi"
   }
 
 ]
