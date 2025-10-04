@@ -12,6 +12,13 @@
     "gambar": "./gambar/semangat-pudar-3-solusi-jitu-mengatasi-anemia-energi.png",
     "tanggal": "2025-10-02",
     "slug": "semangat-pudar-3-solusi-jitu-mengatasi-anemia-energi"
+  },
+  {
+    "id": 3,
+    "file": "artikel/artikel3.txt",
+    "gambar": "./gambar/wajah-lesu-6-rahasia-ampuh-menjaga-kulit-cerah.png",
+    "tanggal": "2025-10-04",
+    "slug": "wajah-lesu-6-rahasia-ampuh-menjaga-kulit-cerah"
   }
 
 ]
