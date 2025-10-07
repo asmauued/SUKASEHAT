@@ -107,7 +107,6 @@ function renderControls() {
     controls.id = "pagination-controls";
     controls.style.textAlign = "center";
     controls.style.margin = "20px";
-    controls.style.backgroundColorcolor = "#e8ffd7";
     controls.innerHTML = `
       <button id="prevBtn">← Sebelumnya</button>
       <button id="nextBtn">Berikutnya →</button>
