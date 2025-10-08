@@ -309,17 +309,6 @@ function isMyDevice() {
   const ua = navigator.userAgent.toLowerCase();
   return ua.includes("windows") && ua.includes("brave");
 }
-if (isMyDevice()) {
-  detailContainer.innerHTML += `
-    <div class="seo-check">
-      <h3>Analisis Kata Kunci</h3>
-      <p>Kata Kunci: <b>${seoCheck.keyword}</b></p>
-      <p>Kemunculan: ${seoCheck.occurrences} kali</p>
-      <p>Kepadatan: ${seoCheck.density}</p>
-    </div>
-  `;
-}
-
 function extractTags(text) {
   const tagMatch = text.match(/TAG:\s*(.+)/i);
   if (!tagMatch) return [];
@@ -345,3 +334,4 @@ if (tags.length > 0) {
     `;
   }
 }
+
