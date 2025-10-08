@@ -21,26 +21,26 @@ document.addEventListener("DOMContentLoaded", () => {
   initWarnDialog();
   cekKoneksi();
 
-fetch("artikel.json")
-  .then(res => res.json())
-  .then(data => {
-    articlesData = data.sort((a, b) =>
-      new Date(b.tanggal) - new Date(a.tanggal)
-    );
+  fetch("artikel.json")
+    .then((res) => res.json())
+    .then((data) => {
+      articlesData = data.sort(
+        (a, b) => new Date(b.tanggal) - new Date(a.tanggal)
+      );
 
-    renderPage();
-    renderControls();
+      renderPage();
+      renderControls();
 
-    const slug = new URLSearchParams(location.search).get("slug");
-    if (slug) {
-      const found = articlesData.find(a => a.slug === slug);
-      if (found) {
-        fetch(found.file)
-          .then(r => r.text())
-          .then(t => showDetail(t, found.gambar, found.tanggal));
+      const slug = new URLSearchParams(location.search).get("slug");
+      if (slug) {
+        const found = articlesData.find((a) => a.slug === slug);
+        if (found) {
+          fetch(found.file)
+            .then((r) => r.text())
+            .then((t) => showDetail(t, found.gambar, found.tanggal));
+        }
       }
-    }
-  });
+    });
 });
 
 let articlesData = [];
@@ -54,7 +54,7 @@ fetch("artikel.json")
     renderPage();
     renderControls();
   });
-  function pushArticleUrl(slug) {
+function pushArticleUrl(slug) {
   history.pushState({ slug }, "", `?slug=${slug}`);
 }
 
@@ -91,7 +91,7 @@ function renderPage() {
         `;
 
         card.addEventListener("click", () => {
-           pushArticleUrl(item.slug)
+          pushArticleUrl(item.slug);
           showDetail(text, item.gambar, item.tanggal, item.link);
         });
 
@@ -148,8 +148,7 @@ function showDetail(text, gambar, tanggal) {
 
   const renderedContent = marked ? marked.parse(content) : content;
 
-
-  const keyword = title.split(":")[0]; 
+  const keyword = title.split(":")[0];
   const seoCheck = checkKeyword(content, keyword);
 
   detailContainer.innerHTML = `
@@ -176,14 +175,13 @@ function showDetail(text, gambar, tanggal) {
   if (backBtn) backBtn.addEventListener("click", showList);
 }
 
-
 window.addEventListener("popstate", (e) => {
   if (e.state && e.state.slug) {
-    const found = articlesData.find(a => a.slug === e.state.slug);
+    const found = articlesData.find((a) => a.slug === e.state.slug);
     if (found) {
       fetch(found.file)
-        .then(res => res.text())
-        .then(text => showDetail(text, found.gambar, found.tanggal));
+        .then((res) => res.text())
+        .then((text) => showDetail(text, found.gambar, found.tanggal));
     }
   } else {
     showList();
@@ -298,7 +296,6 @@ function checkKeyword(articleText, keyword) {
   const matches = text.match(regex);
   const count = matches ? matches.length : 0;
 
-
   const density = ((count / totalWords) * 100).toFixed(2);
 
   return {
@@ -318,8 +315,8 @@ function extractTags(text) {
   if (!tagMatch) return [];
   return tagMatch[1]
     .split(",")
-    .map(t => t.trim().toLowerCase())
-    .filter(t => t.length > 0);
+    .map((t) => t.trim().toLowerCase())
+    .filter((t) => t.length > 0);
 }
 
 const tags = extractTags(text);
