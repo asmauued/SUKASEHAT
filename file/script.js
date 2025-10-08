@@ -320,8 +320,8 @@ if (isMyDevice()) {
       <p>Kemunculan: ${seoCheck.occurrences} kali</p>
       <p>Kepadatan: ${seoCheck.density}</p>
     </div>
-  `;
-};
+  `;  
+}
 
 function extractTags(text) {
   const tagMatch = text.match(/TAG:\s*(.+)/i);
