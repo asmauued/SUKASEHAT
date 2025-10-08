@@ -321,7 +321,7 @@ if (isMyDevice()) {
       <p>Kepadatan: ${seoCheck.density}</p>
     </div>
   `;
-}
+};
 
 function extractTags(text) {
   const tagMatch = text.match(/TAG:\s*(.+)/i);
