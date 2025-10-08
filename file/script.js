@@ -146,16 +146,28 @@ function showDetail(text, gambar, tanggal) {
   const title = (text.match(/TITLE:\s*(.+)/) || [])[1] || "";
   const content = (text.match(/CONTENT:\s*([\s\S]*)/) || [])[1] || "";
 
+  const renderedContent = marked ? marked.parse(content) : content;
+
+
+  const keyword = title.split(":")[0]; 
+  const seoCheck = checkKeyword(content, keyword);
+
   detailContainer.innerHTML = `
     <h1>${title}</h1>
     <small><i>Dipublikasikan: ${tanggal || ""}</i></small>
     <img src="${gambar || ""}" alt="${title}" />
     <article>
-      ${marked ? marked.parse(content) : content}
+      ${renderedContent}
       <div class="detail-cta">
         Lindungi kesehatan tulang dan sendi Anda dengan susu kambing bubuk dari
         Skygoat, Sigoat, Sheepbrand, Naturamil, dan Otawa.
         Pembelian hanya di <b>Suka Sehat</b>!
+      </div>
+      <div class="seo-check">
+        <h3>Analisis Kata Kunci</h3>
+        <p>Kata Kunci: <b>${seoCheck.keyword}</b></p>
+        <p>Kemunculan: ${seoCheck.occurrences} kali</p>
+        <p>Kepadatan: ${seoCheck.density}</p>
       </div>
     </article>
   `;
@@ -163,6 +175,7 @@ function showDetail(text, gambar, tanggal) {
   const backBtn = document.getElementById("backBtn");
   if (backBtn) backBtn.addEventListener("click", showList);
 }
+
 
 window.addEventListener("popstate", (e) => {
   if (e.state && e.state.slug) {
@@ -272,3 +285,40 @@ document.addEventListener(
 closeWarn.addEventListener("click", () => {
   warnDialog.close();
 });
+
+function checkKeyword(articleText, keyword) {
+  if (!articleText || !keyword) return null;
+
+  const text = articleText.toLowerCase();
+  const key = keyword.toLowerCase();
+
+  const totalWords = text.split(/\s+/).length;
+
+  const regex = new RegExp(`\\b${key}\\b`, "gi");
+  const matches = text.match(regex);
+  const count = matches ? matches.length : 0;
+
+
+  const density = ((count / totalWords) * 100).toFixed(2);
+
+  return {
+    keyword,
+    occurrences: count,
+    totalWords,
+    density: density + "%",
+  };
+}
+function isMyDevice() {
+  const ua = navigator.userAgent.toLowerCase();
+  return ua.includes("windows") && ua.includes("brave");
+}
+if (isMyDevice()) {
+  detailContainer.innerHTML += `
+    <div class="seo-check">
+      <h3>Analisis Kata Kunci</h3>
+      <p>Kata Kunci: <b>${seoCheck.keyword}</b></p>
+      <p>Kemunculan: ${seoCheck.occurrences} kali</p>
+      <p>Kepadatan: ${seoCheck.density}</p>
+    </div>
+  `;
+}
