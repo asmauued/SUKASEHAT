@@ -322,3 +322,29 @@ if (isMyDevice()) {
     </div>
   `;
 }
+
+function extractTags(text) {
+  const tagMatch = text.match(/TAG:\s*(.+)/i);
+  if (!tagMatch) return [];
+  return tagMatch[1]
+    .split(",")
+    .map(t => t.trim().toLowerCase())
+    .filter(t => t.length > 0);
+}
+
+const tags = extractTags(text);
+
+if (tags.length > 0) {
+  console.log("Tag ditemukan:", tags);
+  const seoCheck = checkKeyword(content, tags[0]);
+  if (isMyDevice()) {
+    detailContainer.innerHTML += `
+      <div class="seo-check">
+        <h3>Analisis Kata Kunci</h3>
+        <p>Kata Kunci: <b>${seoCheck.keyword}</b></p>
+        <p>Kemunculan: ${seoCheck.occurrences} kali</p>
+        <p>Kepadatan: ${seoCheck.density}</p>
+      </div>
+    `;
+  }
+}
