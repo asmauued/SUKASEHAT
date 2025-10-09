@@ -1,15 +1,4 @@
 let observer = null;
-let articlesData = [];
-let currentPage = 0;
-const pageSize = 3;
-
-document.addEventListener("DOMContentLoaded", () => {
-  initScrollObserver();
-  initPreloader();
-  initWarnDialog();
-  cekKoneksi();
-  loadArticles();
-});
 
 function initScrollObserver() {
   if (observer) return;
@@ -22,31 +11,50 @@ function initScrollObserver() {
     },
     { threshold: 0.1 }
   );
-  document.querySelectorAll(".scroll-anim").forEach((el) => observer.observe(el));
+  document
+    .querySelectorAll(".scroll-anim")
+    .forEach((el) => observer.observe(el));
 }
+document.addEventListener("DOMContentLoaded", () => {
+  initScrollObserver();
+  initPreloader();
+  initWarnDialog();
+  cekKoneksi();
 
-function loadArticles() {
-  fetch("artikel.json")
-    .then((res) => res.json())
-    .then((data) => {
-      articlesData = data.sort((a, b) => new Date(b.tanggal) - new Date(a.tanggal));
-      renderPage();
-      renderControls();
+fetch("artikel.json")
+  .then(res => res.json())
+  .then(data => {
+    articlesData = data.sort((a, b) =>
+      new Date(b.tanggal) - new Date(a.tanggal)
+    );
 
-      const slug = new URLSearchParams(location.search).get("slug");
-      if (slug) {
-        const found = articlesData.find((a) => a.slug === slug);
-        if (found) {
-          fetch(found.file)
-            .then((r) => r.text())
-            .then((t) => showDetail(t, found.gambar, found.tanggal));
-        }
+    renderPage();
+    renderControls();
+
+    const slug = new URLSearchParams(location.search).get("slug");
+    if (slug) {
+      const found = articlesData.find(a => a.slug === slug);
+      if (found) {
+        fetch(found.file)
+          .then(r => r.text())
+          .then(t => showDetail(t, found.gambar, found.tanggal));
       }
-    })
-    .catch((err) => console.error("Gagal memuat artikel:", err));
-}
+    }
+  });
+});
 
-function pushArticleUrl(slug) {
+let articlesData = [];
+let currentPage = 0;
+const pageSize = 3;
+
+fetch("artikel.json")
+  .then((res) => res.json())
+  .then((data) => {
+    articlesData = data;
+    renderPage();
+    renderControls();
+  });
+  function pushArticleUrl(slug) {
   history.pushState({ slug }, "", `?slug=${slug}`);
 }
 
@@ -68,6 +76,7 @@ function renderPage() {
       .then((text) => {
         const titleMatch = text.match(/TITLE:\s*(.+)/);
         const descMatch = text.match(/DESCRIPTION:\s*(.+)/);
+
         const title = titleMatch ? titleMatch[1] : "Tanpa Judul";
         const desc = descMatch ? descMatch[1] : "Tanpa Deskripsi";
 
@@ -80,10 +89,12 @@ function renderPage() {
           <p>${desc}</p>
           <h3>Baca Lebih Lanjut</h3>
         `;
+
         card.addEventListener("click", () => {
-          pushArticleUrl(item.slug);
-          showDetail(text, item.gambar, item.tanggal);
+           pushArticleUrl(item.slug)
+          showDetail(text, item.gambar, item.tanggal, item.link);
         });
+
         container.appendChild(card);
       });
   });
@@ -120,6 +131,7 @@ function renderControls() {
 
 function showDetail(text, gambar, tanggal) {
   document.body.classList.add("detail-open");
+
   const detail = document.getElementById("detail-artikel");
   const detailContainer = document.getElementById("detail-container");
   if (!detail || !detailContainer) return;
@@ -128,13 +140,16 @@ function showDetail(text, gambar, tanggal) {
   detail.classList.remove("leave");
   void detail.offsetWidth;
   detail.classList.add("enter");
+
   window.scrollTo({ top: 0, behavior: "auto" });
 
   const title = (text.match(/TITLE:\s*(.+)/) || [])[1] || "";
   const content = (text.match(/CONTENT:\s*([\s\S]*)/) || [])[1] || "";
-  const renderedContent = window.marked ? marked.parse(content) : content;
-  const tags = extractTags(text);
-  const keyword = tags.length > 0 ? tags[0] : title.split(":")[0];
+
+  const renderedContent = marked ? marked.parse(content) : content;
+
+
+  const keyword = title.split(":")[0]; 
   const seoCheck = checkKeyword(content, keyword);
 
   detailContainer.innerHTML = `
@@ -156,15 +171,19 @@ function showDetail(text, gambar, tanggal) {
       </div>
     </article>
   `;
+
+  const backBtn = document.getElementById("backBtn");
+  if (backBtn) backBtn.addEventListener("click", showList);
 }
+
 
 window.addEventListener("popstate", (e) => {
   if (e.state && e.state.slug) {
-    const found = articlesData.find((a) => a.slug === e.state.slug);
+    const found = articlesData.find(a => a.slug === e.state.slug);
     if (found) {
       fetch(found.file)
-        .then((res) => res.text())
-        .then((text) => showDetail(text, found.gambar, found.tanggal));
+        .then(res => res.text())
+        .then(text => showDetail(text, found.gambar, found.tanggal));
     }
   } else {
     showList();
@@ -177,8 +196,10 @@ function showList() {
     document.body.classList.remove("detail-open");
     return;
   }
+
   detail.classList.remove("enter");
   detail.classList.add("leave");
+
   detail.addEventListener(
     "animationend",
     function handler() {
@@ -191,17 +212,20 @@ function showList() {
   resetArticleUrl();
 }
 
-// === Fungsi Utilitas ===
 function cekKoneksi() {
   if (!navigator.onLine && !window.location.pathname.endsWith("error.html")) {
     window.location.href = "error.html";
   }
 }
+
+cekKoneksi();
+
 window.addEventListener("offline", () => {
   if (!window.location.pathname.endsWith("error.html")) {
     window.location.href = "error.html";
   }
 });
+
 window.addEventListener("online", () => {
   if (window.location.pathname.endsWith("error.html")) {
     window.location.href = "index.html";
@@ -214,7 +238,7 @@ if ("serviceWorker" in navigator) {
   });
 }
 
-function initPreloader() {
+document.addEventListener("DOMContentLoaded", function () {
   const preloader = document.getElementById("preloader");
   const content = document.getElementById("content");
   setTimeout(() => {
@@ -224,64 +248,64 @@ function initPreloader() {
       content.style.display = "block";
     }, 500);
   }, 1000);
+});
+
+const warnDialog = document.getElementById("warnDialog");
+const closeWarn = document.getElementById("closeWarn");
+
+function showWarning() {
+  if (!warnDialog.open) warnDialog.showModal();
 }
 
-// === Dialog Peringatan ===
-function initWarnDialog() {
-  const warnDialog = document.getElementById("warnDialog");
-  const closeWarn = document.getElementById("closeWarn");
+document.addEventListener(
+  "contextmenu",
+  (e) => {
+    e.preventDefault();
+    showWarning();
+  },
+  true
+);
 
-  function showWarning() {
-    if (!warnDialog.open) warnDialog.showModal();
-  }
-
-  document.addEventListener(
-    "contextmenu",
-    (e) => {
+document.addEventListener(
+  "keydown",
+  (e) => {
+    const k = e.key.toLowerCase();
+    if (
+      e.key === "F12" ||
+      (e.ctrlKey && e.shiftKey && ["i", "j", "c"].includes(k)) ||
+      (e.ctrlKey && k === "u")
+    ) {
       e.preventDefault();
       showWarning();
-    },
-    true
-  );
+    }
+  },
+  true
+);
 
-  document.addEventListener(
-    "keydown",
-    (e) => {
-      const k = e.key.toLowerCase();
-      if (
-        e.key === "F12" ||
-        (e.ctrlKey && e.shiftKey && ["i", "j", "c"].includes(k)) ||
-        (e.ctrlKey && k === "u")
-      ) {
-        e.preventDefault();
-        showWarning();
-      }
-    },
-    true
-  );
-
-  if (closeWarn) {
-    closeWarn.addEventListener("click", () => warnDialog.close());
-  }
-}
+closeWarn.addEventListener("click", () => {
+  warnDialog.close();
+});
 
 function checkKeyword(articleText, keyword) {
-  if (!articleText || !keyword) return { keyword: "-", occurrences: 0, density: "0%" };
+  if (!articleText || !keyword) return null;
+
   const text = articleText.toLowerCase();
   const key = keyword.toLowerCase();
+
   const totalWords = text.split(/\s+/).length;
+
   const regex = new RegExp(`\\b${key}\\b`, "gi");
   const matches = text.match(regex);
   const count = matches ? matches.length : 0;
+
+
   const density = ((count / totalWords) * 100).toFixed(2);
-  return { keyword, occurrences: count, totalWords, density: density + "%" };
+
+  return {
+    keyword,
+    occurrences: count,
+    totalWords,
+    density: density + "%",
+  };
 }
 
-function extractTags(text) {
-  const tagMatch = text.match(/TAG:\s*(.+)/i);
-  if (!tagMatch) return [];
-  return tagMatch[1]
-    .split(",")
-    .map((t) => t.trim().toLowerCase())
-    .filter((t) => t.length > 0);
-}
