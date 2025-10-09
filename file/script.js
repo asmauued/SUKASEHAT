@@ -286,26 +286,4 @@ closeWarn.addEventListener("click", () => {
   warnDialog.close();
 });
 
-function checkKeyword(articleText, keyword) {
-  if (!articleText || !keyword) return null;
-
-  const text = articleText.toLowerCase();
-  const key = keyword.toLowerCase();
-
-  const totalWords = text.split(/\s+/).length;
-
-  const regex = new RegExp(`\\b${key}\\b`, "gi");
-  const matches = text.match(regex);
-  const count = matches ? matches.length : 0;
-
-
-  const density = ((count / totalWords) * 100).toFixed(2);
-
-  return {
-    keyword,
-    occurrences: count,
-    totalWords,
-    density: density + "%",
-  };
-}
 
