@@ -162,12 +162,6 @@ function showDetail(text, gambar, tanggal) {
         Skygoat, Sigoat, Sheepbrand, Naturamil, dan Otawa.
         Pembelian hanya di <b>Suka Sehat</b>!
       </div>
-      <div class="seo-check">
-        <h3>Analisis Kata Kunci</h3>
-        <p>Kata Kunci: <b>${seoCheck.keyword}</b></p>
-        <p>Kemunculan: ${seoCheck.occurrences} kali</p>
-        <p>Kepadatan: ${seoCheck.density}</p>
-      </div>
     </article>
   `;
 
