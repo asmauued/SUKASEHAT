@@ -21,26 +21,26 @@ document.addEventListener("DOMContentLoaded", () => {
   initWarnDialog();
   cekKoneksi();
 
-  fetch("artikel.json")
-    .then((res) => res.json())
-    .then((data) => {
-      articlesData = data.sort(
-        (a, b) => new Date(b.tanggal) - new Date(a.tanggal)
-      );
+fetch("artikel.json")
+  .then(res => res.json())
+  .then(data => {
+    articlesData = data.sort((a, b) =>
+      new Date(b.tanggal) - new Date(a.tanggal)
+    );
 
-      renderPage();
-      renderControls();
+    renderPage();
+    renderControls();
 
-      const slug = new URLSearchParams(location.search).get("slug");
-      if (slug) {
-        const found = articlesData.find((a) => a.slug === slug);
-        if (found) {
-          fetch(found.file)
-            .then((r) => r.text())
-            .then((t) => showDetail(t, found.gambar, found.tanggal));
-        }
+    const slug = new URLSearchParams(location.search).get("slug");
+    if (slug) {
+      const found = articlesData.find(a => a.slug === slug);
+      if (found) {
+        fetch(found.file)
+          .then(r => r.text())
+          .then(t => showDetail(t, found.gambar, found.tanggal));
       }
-    });
+    }
+  });
 });
 
 let articlesData = [];
@@ -54,7 +54,7 @@ fetch("artikel.json")
     renderPage();
     renderControls();
   });
-function pushArticleUrl(slug) {
+  function pushArticleUrl(slug) {
   history.pushState({ slug }, "", `?slug=${slug}`);
 }
 
@@ -91,7 +91,7 @@ function renderPage() {
         `;
 
         card.addEventListener("click", () => {
-          pushArticleUrl(item.slug);
+           pushArticleUrl(item.slug)
           showDetail(text, item.gambar, item.tanggal, item.link);
         });
 
@@ -146,17 +146,12 @@ function showDetail(text, gambar, tanggal) {
   const title = (text.match(/TITLE:\s*(.+)/) || [])[1] || "";
   const content = (text.match(/CONTENT:\s*([\s\S]*)/) || [])[1] || "";
 
-  const renderedContent = marked ? marked.parse(content) : content;
-
-  const keyword = title.split(":")[0];
-  const seoCheck = checkKeyword(content, keyword);
-
   detailContainer.innerHTML = `
     <h1>${title}</h1>
     <small><i>Dipublikasikan: ${tanggal || ""}</i></small>
     <img src="${gambar || ""}" alt="${title}" />
     <article>
-      ${renderedContent}
+      ${marked ? marked.parse(content) : content}
       <div class="detail-cta">
         Lindungi kesehatan tulang dan sendi Anda dengan susu kambing bubuk dari
         Skygoat, Sigoat, Sheepbrand, Naturamil, dan Otawa.
@@ -171,11 +166,11 @@ function showDetail(text, gambar, tanggal) {
 
 window.addEventListener("popstate", (e) => {
   if (e.state && e.state.slug) {
-    const found = articlesData.find((a) => a.slug === e.state.slug);
+    const found = articlesData.find(a => a.slug === e.state.slug);
     if (found) {
       fetch(found.file)
-        .then((res) => res.text())
-        .then((text) => showDetail(text, found.gambar, found.tanggal));
+        .then(res => res.text())
+        .then(text => showDetail(text, found.gambar, found.tanggal));
     }
   } else {
     showList();

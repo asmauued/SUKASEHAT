@@ -33,5 +33,19 @@
     "gambar": "./gambar/asma-membatasi-7-rahasia-memperkuat-paru.png",
     "tanggal": "2025-10-07",
     "slug": "asma-membatasi-7-rahasia-memperkuat-paru"
+  },
+  {
+    "id": 6,
+    "file": "artikel/artikel6.txt",
+    "gambar": "./gambar/susu-yang-berbeda-8-fakta-ilmiah-susu-kambing-unggul.png",
+    "tanggal": "2025-10-08",
+    "slug": "susu-yang-berbeda-8-fakta-ilmiah-susu-kambing-unggul "
+  },
+  {
+    "id": 7,
+    "file": "artikel/artikel7.txt",
+    "gambar": "./gambar/pilihan-pintar-untuk-kesehatan-8-fakta-susu-kambing.png",
+    "tanggal": "2025-10-09",
+    "slug": "pilihan-pintar-untuk-kesehatan-8-fakta-susu-kambing"
   }
 ]
