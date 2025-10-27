@@ -1,4 +1,7 @@
 let observer = null;
+let articlesData = [];
+let currentPage = 0;
+const pageSize = 3;
 
 function initScrollObserver() {
   if (observer) return;
@@ -11,55 +14,33 @@ function initScrollObserver() {
     },
     { threshold: 0.1 }
   );
-  document
-    .querySelectorAll(".scroll-anim")
-    .forEach((el) => observer.observe(el));
+  document.querySelectorAll(".scroll-anim").forEach((el) => observer.observe(el));
 }
-document.addEventListener("DOMContentLoaded", () => {
-  initScrollObserver();
-  initPreloader();
-  initWarnDialog();
-  cekKoneksi();
 
-fetch("artikel.json")
-  .then(res => res.json())
-  .then(data => {
-    articlesData = data.sort((a, b) =>
-      new Date(b.tanggal) - new Date(a.tanggal)
-    );
-
-    renderPage();
-    renderControls();
-
-    const slug = new URLSearchParams(location.search).get("slug");
-    if (slug) {
-      const found = articlesData.find(a => a.slug === slug);
-      if (found) {
-        fetch(found.file)
-          .then(r => r.text())
-          .then(t => showDetail(t, found.gambar, found.tanggal));
-      }
-    }
-  });
-});
-
-let articlesData = [];
-let currentPage = 0;
-const pageSize = 3;
-
-fetch("artikel.json")
-  .then((res) => res.json())
-  .then((data) => {
-    articlesData = data;
-    renderPage();
-    renderControls();
-  });
-  function pushArticleUrl(slug) {
-  history.pushState({ slug }, "", `?slug=${slug}`);
+function pushArticleUrl(slug) {
+  const newUrl = `/artikel/${slug}`;
+  history.pushState({ slug }, "", newUrl);
+  updateMetaTags(slug); // Update metadata untuk SEO
 }
 
 function resetArticleUrl() {
-  history.pushState({}, "", window.location.pathname);
+  history.pushState({}, "", "/");
+  updateMetaTags(); // Reset metadata untuk homepage
+}
+
+function updateMetaTags(slug = null) {
+  const titleEl = document.querySelector("title");
+  const descEl = document.querySelector('meta[name="description"]');
+  if (slug) {
+    const article = articlesData.find((a) => a.slug === slug);
+    if (article) {
+      titleEl.textContent = article.title || "Artikel";
+      if (descEl) descEl.setAttribute("content", article.description || "Deskripsi artikel");
+    }
+  } else {
+    titleEl.textContent = "Daftar Artikel";
+    if (descEl) descEl.setAttribute("content", "Daftar artikel tentang kesehatan tulang dan sendi.");
+  }
 }
 
 function renderPage() {
@@ -91,7 +72,7 @@ function renderPage() {
         `;
 
         card.addEventListener("click", () => {
-           pushArticleUrl(item.slug)
+          pushArticleUrl(item.slug);
           showDetail(text, item.gambar, item.tanggal, item.link);
         });
 
@@ -129,7 +110,7 @@ function renderControls() {
   }
 }
 
-function showDetail(text, gambar, tanggal) {
+function showDetail(text, gambar, tanggal, link) {
   document.body.classList.add("detail-open");
 
   const detail = document.getElementById("detail-artikel");
@@ -164,19 +145,6 @@ function showDetail(text, gambar, tanggal) {
   if (backBtn) backBtn.addEventListener("click", showList);
 }
 
-window.addEventListener("popstate", (e) => {
-  if (e.state && e.state.slug) {
-    const found = articlesData.find(a => a.slug === e.state.slug);
-    if (found) {
-      fetch(found.file)
-        .then(res => res.text())
-        .then(text => showDetail(text, found.gambar, found.tanggal));
-    }
-  } else {
-    showList();
-  }
-});
-
 function showList() {
   const detail = document.getElementById("detail-artikel");
   if (!detail) {
@@ -193,10 +161,11 @@ function showList() {
       detail.style.display = "none";
       document.body.classList.remove("detail-open");
       detail.removeEventListener("animationend", handler);
+      renderPage();
+      resetArticleUrl();
     },
     { once: true }
   );
-  resetArticleUrl();
 }
 
 function cekKoneksi() {
@@ -205,7 +174,57 @@ function cekKoneksi() {
   }
 }
 
-cekKoneksi();
+document.addEventListener("DOMContentLoaded", () => {
+  initScrollObserver();
+  initPreloader();
+  initWarnDialog();
+  cekKoneksi();
+
+  // Ambil slug dari URL pathname
+  const pathParts = window.location.pathname.split("/");
+  const slug = pathParts[pathParts.length - 1] !== "artikel" ? pathParts[pathParts.length - 1] : null;
+
+  fetch("artikel.json")
+    .then((res) => res.json())
+    .then((data) => {
+      articlesData = data.sort((a, b) => new Date(b.tanggal) - new Date(a.tanggal));
+
+      if (slug) {
+        const found = articlesData.find((a) => a.slug === slug);
+        if (found) {
+          fetch(found.file)
+            .then((r) => r.text())
+            .then((t) => {
+              showDetail(t, found.gambar, found.tanggal);
+              updateMetaTags(slug);
+            });
+          return;
+        }
+      }
+
+      renderPage();
+      renderControls();
+      updateMetaTags();
+    });
+});
+
+window.addEventListener("popstate", (e) => {
+  const slug = e.state && e.state.slug;
+  if (slug) {
+    const found = articlesData.find((a) => a.slug === slug);
+    if (found) {
+      fetch(found.file)
+        .then((res) => res.text())
+        .then((text) => {
+          showDetail(text, found.gambar, found.tanggal);
+          updateMetaTags(slug);
+        });
+    }
+  } else {
+    showList();
+    updateMetaTags();
+  }
+});
 
 window.addEventListener("offline", () => {
   if (!window.location.pathname.endsWith("error.html")) {
@@ -225,7 +244,7 @@ if ("serviceWorker" in navigator) {
   });
 }
 
-document.addEventListener("DOMContentLoaded", function () {
+function initPreloader() {
   const preloader = document.getElementById("preloader");
   const content = document.getElementById("content");
   setTimeout(() => {
@@ -235,40 +254,42 @@ document.addEventListener("DOMContentLoaded", function () {
       content.style.display = "block";
     }, 500);
   }, 1000);
-});
-
-const warnDialog = document.getElementById("warnDialog");
-const closeWarn = document.getElementById("closeWarn");
-
-function showWarning() {
-  if (!warnDialog.open) warnDialog.showModal();
 }
 
-document.addEventListener(
-  "contextmenu",
-  (e) => {
-    e.preventDefault();
-    showWarning();
-  },
-  true
-);
+function initWarnDialog() {
+  const warnDialog = document.getElementById("warnDialog");
+  const closeWarn = document.getElementById("closeWarn");
 
-document.addEventListener(
-  "keydown",
-  (e) => {
-    const k = e.key.toLowerCase();
-    if (
-      e.key === "F12" ||
-      (e.ctrlKey && e.shiftKey && ["i", "j", "c"].includes(k)) ||
-      (e.ctrlKey && k === "u")
-    ) {
+  function showWarning() {
+    if (!warnDialog.open) warnDialog.showModal();
+  }
+
+  document.addEventListener(
+    "contextmenu",
+    (e) => {
       e.preventDefault();
       showWarning();
-    }
-  },
-  true
-);
+    },
+    true
+  );
 
-closeWarn.addEventListener("click", () => {
-  warnDialog.close();
-});
+  document.addEventListener(
+    "keydown",
+    (e) => {
+      const k = e.key.toLowerCase();
+      if (
+        e.key === "F12" ||
+        (e.ctrlKey && e.shiftKey && ["i", "j", "c"].includes(k)) ||
+        (e.ctrlKey && k === "u")
+      ) {
+        e.preventDefault();
+        showWarning();
+      }
+    },
+    true
+  );
+
+  closeWarn.addEventListener("click", () => {
+    warnDialog.close();
+  });
+}

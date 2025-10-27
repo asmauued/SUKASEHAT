@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /artikel/
+Sitemap: https://sukasehat.com/sitemap.xml
