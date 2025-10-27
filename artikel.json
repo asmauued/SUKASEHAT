@@ -1,51 +1,12 @@
 [
-  {
+   {
     "id": 1,
     "file": "artikel/artikel1.txt",
     "gambar": "./gambar/pernapasan-tersendat-6-solusi-ultim-meredakan-asma-napas-bebas.webp",
     "tanggal": "2025-10-01",
-    "slug": "pernapasan-tersendat-6-solusi-ultim-meredakan-asma-napas-bebas"
-  },
-  {
-    "id": 2,
-    "file": "artikel/artikel2.txt",
-    "gambar": "./gambar/semangat-pudar-3-solusi-jitu-mengatasi-anemia-energi.png",
-    "tanggal": "2025-10-02",
-    "slug": "semangat-pudar-3-solusi-jitu-mengatasi-anemia-energi"
-  },
-  {
-    "id": 3,
-    "file": "artikel/artikel3.txt",
-    "gambar": "./gambar/wajah-lesu-6-rahasia-ampuh-menjaga-kulit-cerah.png",
-    "tanggal": "2025-10-04",
-    "slug": "wajah-lesu-6-rahasia-ampuh-menjaga-kulit-cerah"
-  }, 
-  {
-    "id": 4,
-    "file": "artikel/artikel4.txt",
-    "gambar": "./gambar/wajah-meredup-7-cara-hebat-mengatasi-kulit-lelah.png",
-    "tanggal": "2025-10-06",
-    "slug": "wajah-lesu-6-rahasia-ampuh-menjaga-kulit-cerah"
-  },
-  {
-    "id": 5,
-    "file": "artikel/artikel5.txt",
-    "gambar": "./gambar/asma-membatasi-7-rahasia-memperkuat-paru.png",
-    "tanggal": "2025-10-07",
-    "slug": "asma-membatasi-7-rahasia-memperkuat-paru"
-  },
-  {
-    "id": 6,
-    "file": "artikel/artikel6.txt",
-    "gambar": "./gambar/susu-yang-berbeda-8-fakta-ilmiah-susu-kambing-unggul.png",
-    "tanggal": "2025-10-08",
-    "slug": "susu-yang-berbeda-8-fakta-ilmiah-susu-kambing-unggul "
-  },
-  {
-    "id": 7,
-    "file": "artikel/artikel7.txt",
-    "gambar": "./gambar/pilihan-pintar-untuk-kesehatan-8-fakta-susu-kambing.png",
-    "tanggal": "2025-10-09",
-    "slug": "pilihan-pintar-untuk-kesehatan-8-fakta-susu-kambing"
+    "slug": "pernapasan-tersendat-6-solusi-ultim-meredakan-asma-napas-bebas",
+    "alt": "Solusi alami untuk meredakan asma agar napas lebih bebas",
+    "caption": "6 solusi alami untuk bantu atasi asma dan bernapas lega.",
+    "deskripsi": "Gambar ini menggambarkan seseorang sedang bernapas lega setelah menjalani terapi alami untuk asma. Cocok untuk artikel kesehatan pernapasan."
   }
 ]
